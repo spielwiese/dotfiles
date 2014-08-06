@@ -22,10 +22,10 @@ Bundle 'tmhedberg/matchit'
 Bundle 'hynek/vim-python-pep8-indent'
 Bundle 'jimenezrick/vimerl'
 Bundle 'elixir-lang/vim-elixir'
-
+Bundle 'yegappan/mru'
 " Github repos of the user 'vim-scripts'
 " " => can omit the username part
-Bundle 'mru'
+
 " Bundle 'FuzzyFinder'
 
 " non github bundles:
