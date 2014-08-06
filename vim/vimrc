@@ -1,0 +1,109 @@
+"  ~/.vim/vimrc 
+"  using vundle
+
+" use vim settings, rather than vi settings.
+" should be first, because it changes other options as a side effect.
+set nocompatible
+filetype off        " required by vundle
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" " required! 
+Bundle 'gmarik/vundle'
+
+" My Bundles here
+" github bundles:
+Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-surround'
+Bundle 'tmhedberg/matchit'
+Bundle 'hynek/vim-python-pep8-indent'
+Bundle 'jimenezrick/vimerl'
+Bundle 'elixir-lang/vim-elixir'
+
+" Github repos of the user 'vim-scripts'
+" " => can omit the username part
+Bundle 'mru'
+" Bundle 'FuzzyFinder'
+
+" non github bundles:
+Bundle 'git://github.com/msanders/snipmate.vim.git'
+
+
+filetype plugin indent on   " required!
+
+
+" default encoding
+set encoding=utf-8 
+
+" backups and set backup dirs
+set nobackup
+set nowritebackup
+" set backup
+" set backupdir=~/.vim/backup   " make sure the dir exists!
+set directory=~/.vim-tmp,~/.vim/tmp,/tmp  " make sure one of the dirs exist!
+" or don't use backups at all
+
+" set 256 colors in vim
+set t_Co=256
+colors ir_black
+
+" enable syntax highlighting
+syntax on
+
+"highlight the 80th column in a darkish grey
+set colorcolumn=80
+highlight ColorColumn ctermbg=234
+
+
+set history=50  " keep 50 lines of command line history
+set ruler       " show the cursor position all the time
+set showcmd     " display incomplete commands
+set wildmenu    " enhanced command line options.
+set wildmode=longest:full,full
+set number        " Zeilennummern
+set numberwidth=3	" 3 zeichen für die Nummerierung 
+"set cmdheight=2   " info-bar Höhe 
+set hidden      " Erlaubt z.B. das oeffnen neuer Dateien, wenn ungespeicherte 
+                " Aenderungen vorhanden sind
+set cursorline  " highlight current line the cursor is on
+
+" searching
+set hlsearch		" highlight search results
+set incsearch		" do incremental searching
+set ignorecase
+set smartcase
+
+set cindent       " 
+set autoindent		" EinrÃckung wie Zeile zuvor
+set smartindent		"
+set tabstop=2     " Tab Schrittweite 4 Zeichen
+set shiftwidth=2	" indent width for autoindent 
+set expandtab     " spaces for tabs
+set nowrap
+
+"set guioptions=e
+"set tabline=2		  " show gui tabs
+" Always display the status line, even if only one window is displayed
+set laststatus=2	
+
+" Instead of failing a command because of unsaved changes, instead raise a
+" dialogue asking if you wish to save changed files.
+set confirm
+
+
+" Mappings
+" Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
+" which is the default
+map Y y$
+
+" Easy split window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" CtrlP plugin
+set runtimepath^=~/.vim/bundle/ctrlp.vim
