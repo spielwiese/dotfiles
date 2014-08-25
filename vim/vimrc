@@ -1,5 +1,5 @@
-"  ~/.vim/vimrc 
-"  using vundle
+" ~/.vim/vimrc 
+" using vundle
 
 " use vim settings, rather than vi settings.
 " should be first, because it changes other options as a side effect.
@@ -13,19 +13,24 @@ call vundle#rc()
 " " required! 
 Bundle 'gmarik/vundle'
 
-" My Bundles here
+" Bundles here
 " github bundles:
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'tmhedberg/matchit'
+Bundle 'wincent/command-t'
 Bundle 'hynek/vim-python-pep8-indent'
 Bundle 'jimenezrick/vimerl'
 Bundle 'elixir-lang/vim-elixir'
 Bundle 'yegappan/mru'
+" Markdown syntax highlighting
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Bundle 'lunaru/vim-twig'
+
 " Github repos of the user 'vim-scripts'
 " " => can omit the username part
-
 " Bundle 'FuzzyFinder'
 
 " non github bundles:
@@ -44,11 +49,15 @@ set nowritebackup
 " set backup
 " set backupdir=~/.vim/backup   " make sure the dir exists!
 set directory=~/.vim-tmp,~/.vim/tmp,/tmp  " make sure one of the dirs exist!
-" or don't use backups at all
+
 
 " set 256 colors in vim
-set t_Co=256
-colors ir_black
+" set t_Co=256
+" colorscheme ir_black
+colorscheme grb256
+" let g:solarized_termcolors=256
+" colorscheme solarized
+" set background=dark
 
 " enable syntax highlighting
 syntax on
@@ -58,17 +67,18 @@ set colorcolumn=80
 highlight ColorColumn ctermbg=234
 
 
-set history=50  " keep 50 lines of command line history
+set history=200 " keep 200 lines of command line history
 set ruler       " show the cursor position all the time
 set showcmd     " display incomplete commands
 set wildmenu    " enhanced command line options.
-set wildmode=longest:full,full
+set wildmode=full
 set number        " Zeilennummern
 set numberwidth=3	" 3 zeichen für die Nummerierung 
 "set cmdheight=2   " info-bar Höhe 
 set hidden      " Erlaubt z.B. das oeffnen neuer Dateien, wenn ungespeicherte 
                 " Aenderungen vorhanden sind
 set cursorline  " highlight current line the cursor is on
+set scrolloff=2 " keep n lines from top/bottom of the window while scrolling
 
 " searching
 set hlsearch		" highlight search results
@@ -76,22 +86,26 @@ set incsearch		" do incremental searching
 set ignorecase
 set smartcase
 
+" indentation
 set cindent       " 
-set autoindent		" EinrÃckung wie Zeile zuvor
+set autoindent		" Einrückung wie Zeile zuvor
 set smartindent		"
 set tabstop=2     " Tab Schrittweite 4 Zeichen
 set shiftwidth=2	" indent width for autoindent 
 set expandtab     " spaces for tabs
 set nowrap
 
-"set guioptions=e
-"set tabline=2		  " show gui tabs
 " Always display the status line, even if only one window is displayed
 set laststatus=2	
 
 " Instead of failing a command because of unsaved changes, instead raise a
 " dialogue asking if you wish to save changed files.
 set confirm
+
+" use the mouse (for scrolling only, I hope)
+set mouse=a
+map <ScrollWheelUp> <C-Y>
+map <ScrollWheelDown> <C-E>
 
 
 " Mappings
@@ -105,5 +119,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" CtrlP plugin
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+" better history navigation
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
