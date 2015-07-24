@@ -2,3 +2,6 @@ tmp/
 backup/
 tmp/
 bundle/
+plugged/
+.netrwhist
+autoload

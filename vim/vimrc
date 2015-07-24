@@ -1,52 +1,69 @@
-" ~/.vim/vimrc 
-" using vundle
+" ~/.vim/vimrc
 
 " use vim settings, rather than vi settings.
 " should be first, because it changes other options as a side effect.
 set nocompatible
-filetype off        " required by vundle
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" autoinstall and update vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall
+endif
 
-" let Vundle manage Vundle
-" " required! 
-Bundle 'gmarik/vundle'
+call plug#begin()
+" colorschemes
+Plug 'flazz/vim-colorschemes'
+Plug 'tpope/vim-vividchalk'
 
-" Bundles here
 " github bundles:
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
-Bundle 'tmhedberg/matchit'
-Bundle 'wincent/command-t'
-Bundle 'hynek/vim-python-pep8-indent'
-Bundle 'jimenezrick/vimerl'
-Bundle 'elixir-lang/vim-elixir'
-Bundle 'yegappan/mru'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tmhedberg/matchit'
+Plug 'yegappan/mru'
+Plug 'kien/ctrlp.vim'
+Plug 'mileszs/ack.vim'
+Plug 'jlanzarotta/bufexplorer'
+
+" programming related
+" syntax checking
+Plug 'scrooloose/syntastic'
+
+" python
+Plug 'hynek/vim-python-pep8-indent'
+
+" erlang
+Plug 'jimenezrick/vimerl'
+
+" elixir
+Plug 'elixir-lang/vim-elixir'
+
+" racket
+Plug 'wlangstroth/vim-racket'
+
+
 " Markdown syntax highlighting
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Bundle 'lunaru/vim-twig'
+"Plug 'godlygeek/tabular'
+"Plug 'plasticboy/vim-markdown'
+"Plug 'lunaru/vim-twig'
 
 " Github repos of the user 'vim-scripts'
 " " => can omit the username part
-" Bundle 'FuzzyFinder'
+" Plug 'FuzzyFinder'
 
 " non github bundles:
-Bundle 'git://github.com/msanders/snipmate.vim.git'
-
-
-filetype plugin indent on   " required!
+"Plug 'git://github.com/msanders/snipmate.vim.git'
+call plug#end()
 
 
 " default encoding
-set encoding=utf-8 
+set encoding=utf-8
 
 " backups and set backup dirs
 set nobackup
 set nowritebackup
-" set backup
 " set backupdir=~/.vim/backup   " make sure the dir exists!
 set directory=~/.vim-tmp,~/.vim/tmp,/tmp  " make sure one of the dirs exist!
 
@@ -60,11 +77,10 @@ colorscheme grb256
 " set background=dark
 
 " enable syntax highlighting
-syntax on
-
+" syntax on
 "highlight the 80th column in a darkish grey
-set colorcolumn=80
-highlight ColorColumn ctermbg=234
+" set colorcolumn=80
+" highlight ColorColumn "ctermbg=232
 
 
 set history=200 " keep 200 lines of command line history
@@ -73,9 +89,9 @@ set showcmd     " display incomplete commands
 set wildmenu    " enhanced command line options.
 set wildmode=full
 set number        " Zeilennummern
-set numberwidth=3	" 3 zeichen für die Nummerierung 
-"set cmdheight=2   " info-bar Höhe 
-set hidden      " Erlaubt z.B. das oeffnen neuer Dateien, wenn ungespeicherte 
+set numberwidth=3	" 3 zeichen für die Nummerierung
+"set cmdheight=2   " info-bar Höhe
+set hidden      " Erlaubt z.B. das oeffnen neuer Dateien, wenn ungespeicherte
                 " Aenderungen vorhanden sind
 set cursorline  " highlight current line the cursor is on
 set scrolloff=2 " keep n lines from top/bottom of the window while scrolling
@@ -85,18 +101,34 @@ set hlsearch		" highlight search results
 set incsearch		" do incremental searching
 set ignorecase
 set smartcase
+"turn off search highlighting with \q
+:nmap \q :nohlsearch<CR>
 
 " indentation
-set cindent       " 
+set cindent       "
 set autoindent		" Einrückung wie Zeile zuvor
 set smartindent		"
 set tabstop=2     " Tab Schrittweite 4 Zeichen
-set shiftwidth=2	" indent width for autoindent 
+set shiftwidth=2	" indent width for autoindent
 set expandtab     " spaces for tabs
 set nowrap
 
 " Always display the status line, even if only one window is displayed
-set laststatus=2	
+set laststatus=2
+
+
+" syntastic settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" remove trailing whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
 
 " Instead of failing a command because of unsaved changes, instead raise a
 " dialogue asking if you wish to save changed files.
@@ -122,3 +154,20 @@ nnoremap <C-l> <C-w>l
 " better history navigation
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+
+" ctrlP
+noremap <Leader>, :CtrlP<CR>
+noremap <Leader>a :Ack
+
+" change cursor in input mode (for tmux in iterm2)
+if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+" upon hitting escape to change modes,
+" send successive move-left and move-right
+" commands to immediately redraw the cursor
+inoremap <special> <Esc> <Esc>hl
